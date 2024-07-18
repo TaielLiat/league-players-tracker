@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Players List</title>
+</head>
+<body>
+  <h1>Players List</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th>Rank</th>
+        <th>Tier</th>
+        <th>League Points</th>
+      </tr>
+    </thead>
+    <tbody id="playersTableBody">
+    </tbody>
+  </table>
+
+  <script>
+    async function fetchPlayers() {
+      const response = await fetch('http://localhost:3000/players');
+      const players = await response.json();
+
+      const tableBody = document.getElementById('playersTableBody');
+      tableBody.innerHTML = '';
+
+      players.forEach(player => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${player.name}</td>
+          <td>${player.wins}</td>
+          <td>${player.losses}</td>
+          <td>${player.rank}</td>
+          <td>${player.tier}</td>
+          <td>${player.leaguePoints}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    fetchPlayers();
+
+    // Opcional: refrescar los datos cada 60 segundos
+    setInterval(fetchPlayers, 60000);
+  </script>
+</body>
+</html>

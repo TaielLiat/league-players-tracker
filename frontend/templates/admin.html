@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Player Management</title>
+</head>
+
+<body>
+    <h1>Add a New Player</h1>
+    <form id="addPlayerForm">
+        <label for="gameName">Game Name:</label>
+        <input type="text" id="gameName" name="gameName" required><br><br>
+        <label for="tagLine">Tag Line:</label>
+        <input type="text" id="tagLine" name="tagLine" required><br><br>
+        <button type="submit">Add Player</button>
+    </form>
+
+    <div id="message"></div>
+
+    <h1>Manage Players</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Rank</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="playersTableBody">
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchPlayers() {
+            const response = await fetch('http://localhost:3000/players');
+            const players = await response.json();
+
+            const tableBody = document.getElementById('playersTableBody');
+            tableBody.innerHTML = '';
+
+            players.forEach(player => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+          <td>${player.name}</td>
+          <td>${player.tier}</td>
+          <td><button onclick="deletePlayer('${player.name}')">Delete</button></td>
+        `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function deletePlayer(name) {
+            try {
+                const response = await fetch(`http://localhost:3000/delete-player/${name}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+                document.getElementById('message').innerText = result.message;
+                fetchPlayers();
+            } catch (error) {
+                document.getElementById('message').innerText = 'Error: ' + error.message;
+            }
+        }
+
+        document.getElementById('addPlayerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const gameName = document.getElementById('gameName').value;
+            const tagLine = document.getElementById('tagLine').value;
+
+            try {
+                const response = await fetch('http://localhost:3000/add_player', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ gameName, tagLine })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('message').innerText = 'Player added successfully: ' + JSON.stringify(result.playerData);
+                    fetchPlayers();
+                } else {
+                    document.getElementById('message').innerText = 'Error: ' + result.message + ' Details: ' + JSON.stringify(result.error);
+                }
+            } catch (error) {
+                document.getElementById('message').innerText = 'Error: ' + error.message;
+            }
+        });
+
+        // Fetch players initially
+        fetchPlayers();
+
+    </script>
+</body>
+
+</html>
