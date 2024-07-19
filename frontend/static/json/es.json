@@ -1,0 +1,20 @@
+{
+    "pageTitle": "Página Web con Encabezado",
+    "homeLink": "Inicio",
+    "tournamentLink": "Torneo",
+    "rulesLink": "Reglas",
+    "adminLink": "Admin",
+    "themeToggle": "Modo Claro",
+    "welcomeTitle": "¡Bienvenido a nuestro sitio!",
+    "welcomeText": "Disfruta de nuestro contenido y explora el sitio.",
+    "welcomeMessage": "Mensaje de Bienvenida",
+    "playersList": "Lista de Jugadores",
+    "nickname": "Nombre de Invocador",
+    "wins": "Ganadas",
+    "losses": "Perdidas",
+    "rank": "Rango",
+    "tier": "División",
+    "leaguePoints": "Puntos de Liga"
+        
+
+}

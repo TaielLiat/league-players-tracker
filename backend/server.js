@@ -2,18 +2,37 @@ const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 require('dotenv').config();
 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const RIOT_API_KEY = process.env.RIOT_API_KEY;
-
+const DATA_FILE = 'players.json';
+const ADMIN_PASSWORD = 'admin123';
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(express.static('public'));
 
 let players = [];
+
+// Cargar jugadores desde el archivo JSON
+const loadPlayers = () => {
+    if (fs.existsSync(DATA_FILE)) {
+      const data = fs.readFileSync(DATA_FILE, 'utf-8');
+      players = JSON.parse(data);
+    }
+};
+  
+  // Guardar jugadores en el archivo JSON
+const savePlayers = () => {
+fs.writeFileSync(DATA_FILE, JSON.stringify(players, null, 2));
+};
+
+// Cargar jugadores al iniciar el servidor
+loadPlayers();
 
 app.post('/add_player', async (req, res) => {
     const { gameName, tagLine } = req.body;
@@ -53,15 +72,15 @@ app.post('/add_player', async (req, res) => {
         };
 
         players.push(playerData);
+        savePlayers(); // Guardar los jugadores en el archivo JSON
 
         res.json({ message: 'Player added successfully', playerData });
 
     } catch (error) {
         console.error('Error adding player:', error.response ? error.response.data : error.message);
-        res.status(500).json({ message: 'Error adding player', error: error.response ? error.response.data : error.message });
+        res.status(500).json({ message: 'Error adding player'});
     }
 });
-
 
 app.get('/players', (req, res) => {
     res.json(players);
@@ -79,6 +98,15 @@ app.delete('/delete-player/:name', (req, res) => {
     }
 });
 
+// Endpoint to check password
+app.post('/check-password', (req, res) => {
+    const { password } = req.body;
+    if (password === ADMIN_PASSWORD) {
+        res.status(200).send({ success: true });
+    } else {
+        res.status(403).send({ success: false });
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

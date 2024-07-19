@@ -1,27 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Players List</title>
+  <title data-i18n="pageTitle">Webpage with Header</title>
+  <link rel="stylesheet" href="../static/css/styles.css">
+  <link rel="stylesheet" href="../static/css/password-verification.css">
+  <script defer src="../static/js/admin-auth.js"></script>
 </head>
-<body>
-  <h1>Players List</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Wins</th>
-        <th>Losses</th>
-        <th>Rank</th>
-        <th>Tier</th>
-        <th>League Points</th>
-      </tr>
-    </thead>
-    <tbody id="playersTableBody">
-    </tbody>
-  </table>
 
+<body>
+  <header class="header">
+    <nav>
+      <a href="#home" id="homeLink" data-i18n="homeLink">Inicio</a>
+      <a href="#tournament" id="tournamentLink" data-i18n="tournamentLink">Torneo</a>
+      <a href="#rules" id="rulesLink" data-i18n="rulesLink">Reglas</a>
+      <a id="adminLink" href="#">Admin</a>
+      <button id="langToggle">Español</button>
+      <button id="themeToggle">Modo Oscuro</button>
+    </nav>
+  </header>
+
+  <!-- Autenticación de admin -->
+  <div id="adminModal" class="modal">
+    <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+        <h2>Autenticación de Admin</h2>
+        <input type="password" id="adminPassword" placeholder="Ingrese la contraseña">
+        <button id="submitPassword">Entrar</button>
+    </div>
+  </div>
+ <!-- Contenido de la página -->
+  <main>
+    <h1 data-i18n="playersList">Players List</h1>
+    <table>
+      <thead>
+        <tr>
+          <th data-i18n="nickname">Nickname</th>
+          <th data-i18n="wins">Wins</th>
+          <th data-i18n="losses">Losses</th>
+          <th data-i18n="rank">Rank</th>
+          <th data-i18n="tier">Tier</th>
+          <th data-i18n="leaguePoints">League Points</th>
+        </tr>
+      </thead>
+      <tbody id="playersTableBody">
+      </tbody>
+    </table>
+  </main>
   <script>
     async function fetchPlayers() {
       const response = await fetch('http://localhost:3000/players');
@@ -49,5 +76,8 @@
     // Opcional: refrescar los datos cada 60 segundos
     setInterval(fetchPlayers, 60000);
   </script>
+  <script src="../static/js/translate.js"></script>
+  <script src="../static/js/theme.js"></script>
 </body>
+
 </html>

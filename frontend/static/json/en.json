@@ -1,0 +1,19 @@
+{
+    "pageTitle": "Webpage with Header",
+    "homeLink": "Home",
+    "tournamentLink": "Tournament",
+    "rulesLink": "Rules",
+    "adminLink": "Admin",
+    "themeToggle": "Dark Mode",
+    "welcomeTitle": "Welcome to our site!",
+    "welcomeText": "Enjoy our content and explore the site.",
+    "welcomeMessage": "Welcome Message",
+    "playersList": "Players List",
+    "nickname": "Summoner Name",
+    "wins": "Wins",
+    "losses": "Losses",
+    "rank": "Rank",
+    "tier": "Tier",
+    "leaguePoints": "League Points"
+      
+}

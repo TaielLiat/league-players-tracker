@@ -1,18 +1,35 @@
-/* frontend/styles.css */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-  
-  .container {
-    text-align: center;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0,)
-   }
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+.header {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+}
+.header a:hover {
+  text-decoration: underline;
+}
+.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+.dark-mode .header {
+  background-color: #1e1e1e;
+}
+.dark-mode .header a {
+  color: #e0e0e0;
+}
+.lang-selector, .theme-selector {
+  margin-left: 10px;
+}
